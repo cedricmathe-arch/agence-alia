@@ -1,0 +1,27 @@
+# robots.txt — Agence ALIA
+# www.agence-alia.fr
+
+User-agent: *
+Allow: /
+
+# Autorisation explicite des bots IA — critique pour le GEO
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Sitemap
+Sitemap: https://www.agence-alia.fr/sitemap.xml
