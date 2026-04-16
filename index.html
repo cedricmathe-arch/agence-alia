@@ -1282,6 +1282,11 @@ function showResult(){
       </div>
       <button class="qr-cta" id="qrCtaBtn" data-score="${total}" data-max="${max}">${cta}</button>
       <p style="font-size:11px;color:var(--muted);margin-top:10px">L\'audit (300 €) est intégralement déduit si vous rejoignez le Pack Lancement.</p>
+      <div id="qrImportWrap" style="margin-top:16px;padding:14px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.15);border-radius:var(--r);display:none">
+        <div style="font-size:10px;font-weight:700;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:8px">Import dashboard ALIA</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Importez automatiquement ce prospect dans votre CRM avec son score PRISM.</div>
+        <a id="qrImportBtn" href="#" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:var(--navy);color:var(--gold);border:1px solid rgba(201,168,76,.3);border-radius:var(--r);font-size:12px;font-weight:700;text-decoration:none;letter-spacing:.5px">⬡ Importer dans le dashboard →</a>
+      </div>
       <div id="qrForm" style="margin-top:24px;padding:20px;background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.2);border-radius:var(--r);text-align:left;display:none">
         <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px">Être rappelé par ALIA</div>
         <form id="prismForm" action="https://formspree.io/f/mbdqgzde" method="POST" style="display:flex;flex-direction:column;gap:10px">
@@ -1351,6 +1356,13 @@ document.addEventListener('click', function(e){
       form.style.display = form.style.display === 'none' ? 'block' : 'none';
       if(scoreInput) scoreInput.value = 'Score PRISM : ' + score + '/' + max;
       e.target.style.display = 'none';
+      // Show import button with pre-filled URL
+      const wrap = document.getElementById('qrImportWrap');
+      const btn = document.getElementById('qrImportBtn');
+      if(wrap && btn){
+        wrap.style.display = 'block';
+        btn.href = 'dashboard_alia.html?score=' + score + '&max=' + max;
+      }
     }
   }
 });
