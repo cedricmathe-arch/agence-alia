@@ -474,16 +474,6 @@ footer{background:var(--navy-mid);border-top:1px solid rgba(201,168,76,.14);padd
 </style>
 </head>
 <body>
-<!-- Formulaire caché pour détection Netlify -->
-<form name="contact-prism" data-netlify="true" netlify-honeypot="bot-field" hidden>
-  <input type="hidden" name="form-name" value="contact-prism"/>
-  <input type="text" name="nom"/>
-  <input type="email" name="email"/>
-  <input type="tel" name="telephone"/>
-  <textarea name="message"></textarea>
-  <input type="hidden" name="score"/>
-</form>
-
 <a href="#hero" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:9999;" onfocus="this.style.cssText='position:fixed;top:12px;left:12px;width:auto;height:auto;padding:10px 18px;background:var(--gold);color:var(--navy);font-weight:700;border-radius:var(--r);z-index:9999;'">Aller au contenu principal</a>
 
 <!-- ═══ NAVBAR ═══ -->
@@ -1234,10 +1224,10 @@ function showResult(){
       <p style="font-size:11px;color:var(--muted);margin-top:10px">L\'audit (300 €) est intégralement déduit si vous rejoignez le Pack Lancement.</p>
       <div id="qrForm" style="margin-top:24px;padding:20px;background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.2);border-radius:var(--r);text-align:left;display:none">
         <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px">Être rappelé par ALIA</div>
-        <form name="contact-prism" id="prismForm" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display:flex;flex-direction:column;gap:10px">
-          <input type="hidden" name="form-name" value="contact-prism"/>
+        <form id="prismForm" action="https://formspree.io/f/mbdqgzde" method="POST" style="display:flex;flex-direction:column;gap:10px">
           <input type="hidden" name="score" id="formScore" value=""/>
-          <p style="display:none"><input name="bot-field"/></p>
+          <input type="hidden" name="_subject" value="Nouveau diagnostic PRISM — Agence ALIA"/>
+          <input type="hidden" name="_replyto" id="formReplyTo" value=""/>
           <input type="text" name="nom" placeholder="Votre nom" required style="padding:11px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(201,168,76,.25);border-radius:var(--r);color:#fff;font-family:var(--fb);font-size:14px;outline:none"/>
           <input type="email" name="email" placeholder="Votre email" required style="padding:11px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(201,168,76,.25);border-radius:var(--r);color:#fff;font-family:var(--fb);font-size:14px;outline:none"/>
           <input type="tel" name="telephone" placeholder="Votre téléphone (optionnel)" style="padding:11px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(201,168,76,.25);border-radius:var(--r);color:#fff;font-family:var(--fb);font-size:14px;outline:none"/>
@@ -1263,21 +1253,30 @@ function showResult(){
 renderQ();
 
 /* Netlify Form — soumission AJAX sans redirection */
-document.addEventListener('DOMContentLoaded', function(){
-  const form = document.getElementById('prismForm');
-  if(!form) return;
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    const data = new FormData(form);
-    fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams(data).toString()})
-      .then(function(){
-        form.style.display = 'none';
-        document.getElementById('prismSuccess').style.display = 'block';
-      })
-      .catch(function(){
-        form.style.display = 'none';
-        document.getElementById('prismSuccess').style.display = 'block';
-      });
+/* Formspree — event delegation car form généré dynamiquement */
+document.addEventListener('submit', function(e){
+  const form = e.target;
+  if(!form || form.id !== 'prismForm') return;
+  e.preventDefault();
+  const emailField = form.querySelector('input[name="email"]');
+  const replyTo = form.querySelector('#formReplyTo');
+  if(emailField && replyTo) replyTo.value = emailField.value;
+  const submitBtn = form.querySelector('button[type="submit"]');
+  if(submitBtn) submitBtn.textContent = 'Envoi en cours...';
+  fetch('https://formspree.io/f/mbdqgzde', {
+    method: 'POST',
+    body: new FormData(form),
+    headers: {'Accept': 'application/json'}
+  })
+  .then(function(r){
+    form.style.display = 'none';
+    const success = document.getElementById('prismSuccess');
+    if(success) success.style.display = 'block';
+  })
+  .catch(function(){
+    form.style.display = 'none';
+    const success = document.getElementById('prismSuccess');
+    if(success) success.style.display = 'block';
   });
 });
 
