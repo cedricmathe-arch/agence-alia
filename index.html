@@ -1167,16 +1167,76 @@ function switchTab(i){document.querySelectorAll('.tab-btn').forEach((b,j)=>{b.cl
 
 /* ── QUIZ PRISM ── */
 const QS=[
-  {p:'P — Présence',q:'Votre fiche Google Business est-elle complète et à jour ?',opts:[{t:'Non, je n\'en ai pas ou elle est incomplète',s:1},{t:'Oui, partiellement (horaires, adresse seulement)',s:2},{t:'Oui, avec photos, posts réguliers et catégories',s:4},{t:'Oui + NAP identique sur tous mes annuaires',s:5}]},
-  {p:'R — Réputation',q:'Comment gérez-vous vos avis clients en ligne ?',opts:[{t:'Je ne les consulte pas ou presque jamais',s:1},{t:'Je les lis mais réponds rarement',s:2},{t:'Je réponds aux avis négatifs uniquement',s:3},{t:'Je réponds à tous et sollicite des retours',s:5}]},
-  {p:'I — Indexation',q:'Votre site autorise-t-il les bots IA à l\'indexer ?',opts:[{t:'Je ne sais pas ce qu\'est un robots.txt',s:1},{t:'J\'ai un robots.txt mais sans règles IA',s:2},{t:'GPTBot est autorisé dans mon robots.txt',s:4},{t:'GPTBot + PerplexityBot + sitemap.xml à jour',s:5}]},
-  {p:'S — Sémantique',q:'Votre contenu répond-il aux questions de vos clients locaux ?',opts:[{t:'Mon site n\'a pas été mis à jour depuis +1 an',s:1},{t:'Quelques pages statiques, peu de texte',s:2},{t:'Des pages par service, contenu structuré',s:3},{t:'Pages FAQ, contenu expert local, mots-clés IA',s:5}]},
-  {p:'M — Moteurs IA',q:'Êtes-vous cité par ChatGPT ou Perplexity quand on cherche votre métier localement ?',opts:[{t:'Je n\'ai jamais testé',s:1},{t:'J\'ai testé : je ne suis pas cité',s:1},{t:'Cité parfois, pas systématiquement',s:3},{t:'Cité régulièrement en première réponse',s:5}]},
-  {p:'E-E-A-T — Autorité',q:'Votre site affiche-t-il des signaux d\'expertise et de confiance ?',opts:[{t:'Pas de mentions légales ni de page À propos',s:1},{t:'Page À propos basique',s:2},{t:'Certifications, diplômes ou années d\'expérience',s:3},{t:'Schema.org + certifications + témoignages structurés',s:5}]},
+  {
+    p:'P — Présence & NAP',
+    q:'Ouvrez ChatGPT ou Perplexity et tapez <em>"[votre métier] [votre ville]"</em>. Quel est le résultat ?',
+    hint:'Exemple réel : "restaurant fruits de mer Saint-Malo" ou "kinésithérapeute Rennes centre"',
+    opts:[
+      {t:"Mon établissement n'apparaît pas du tout dans la réponse",s:0},
+      {t:"Je suis mentionné une fois, sans détails ni recommandation",s:2},
+      {t:"J'apparais régulièrement avec nom, spécialités et localisation",s:4},
+      {t:"Je suis systématiquement cité en premier avec des attributs positifs spécifiques",s:5}
+    ]
+  },
+  {
+    p:'I — Indexation IA',
+    q:'Votre fichier <code>robots.txt</code> autorise-t-il explicitement les crawlers des IA génératives ?',
+    hint:'GPTBot (OpenAI), PerplexityBot, ClaudeBot, Google-Extended — sans autorisation explicite, les LLM ne peuvent pas vous indexer',
+    opts:[
+      {t:"Je ne sais pas ce qu'est un robots.txt",s:0},
+      {t:"J'ai un robots.txt mais je n'ai pas vérifié les directives IA",s:1},
+      {t:"Mon robots.txt autorise les crawlers classiques mais pas les bots IA spécifiques",s:2},
+      {t:"GPTBot, PerplexityBot et ClaudeBot sont explicitement autorisés dans mon robots.txt",s:5}
+    ]
+  },
+  {
+    p:'R — Réputation sémantique',
+    q:'Comment qualifieriez-vous vos réponses aux avis Google ?',
+    hint:'Les LLM analysent le champ sémantique de vos réponses pour extraire des signaux de recommandation. Une réponse générique ("Merci !") ne génère aucun attribut positif exploitable.',
+    opts:[
+      {t:"Je ne réponds pas ou très rarement à mes avis",s:0},
+      {t:"Je réponds avec des formules courtes et génériques",s:1},
+      {t:"Je réponds de manière personnalisée mais sans stratégie sémantique",s:3},
+      {t:"Mes réponses intègrent des attributs de spécialité, localisation et valeur ajoutée ciblés",s:5}
+    ]
+  },
+  {
+    p:'S — Sémantique & Données structurées',
+    q:'Votre site intègre-t-il un balisage Schema.org <em>LocalBusiness</em> avec les attributs GEO essentiels ?',
+    hint:'Schema.org LocalBusiness avec @type, name, address, geo, openingHours, areaServed et priceRange est un signal de confiance majeur pour les LLM lors de l'entraînement et de la recherche augmentée (RAG).',
+    opts:[
+      {t:"Je ne sais pas ce qu'est Schema.org",s:0},
+      {t:"Mon site a peut-être un Schema basique généré par mon CMS",s:1},
+      {t:"J'ai un Schema.org LocalBusiness mais sans geo, areaServed ni attributs sectoriels",s:3},
+      {t:"Mon Schema.org est complet avec coordonnées, zone desservie, horaires et spécialités",s:5}
+    ]
+  },
+  {
+    p:'M — Moteurs IA & Citations',
+    q:'Vos contenus web (fiches, descriptions, FAQ) sont-ils optimisés pour la réponse augmentée par retrieval (RAG) ?',
+    hint:'Les IA modernes utilisent le RAG pour enrichir leurs réponses en temps réel. Un contenu dense en entités nommées locales (ville, quartier, spécialité, comparatifs) multiplie les chances de citation dans les réponses générées.',
+    opts:[
+      {t:"Mon contenu web n'a pas évolué depuis plus d'un an",s:0},
+      {t:"J'ai du contenu pertinent mais sans structure FAQ ni entités nommées locales",s:2},
+      {t:"Mon site contient des FAQ structurées et des comparatifs, mais sans optimisation RAG explicite",s:3},
+      {t:"Mes contenus ciblent explicitement les requêtes IA locales avec entités, FAQ et données fraîches",s:5}
+    ]
+  },
+  {
+    p:'E-E-A-T & Autorité locale',
+    q:'Comment évaluez-vous votre signal E-E-A-T (Expérience, Expertise, Autorité, Fiabilité) dans votre écosystème local ?',
+    hint:'Google et les LLM évaluent votre E-E-A-T via les mentions presse locale, les backlinks d'associations professionnelles, les certifications affichées et la cohérence de votre présence sur 12+ annuaires de référence.',
+    opts:[
+      {t:"Aucune mention presse, pas d'annuaires renseignés, pas de certifications visibles",s:0},
+      {t:"Présent sur Pages Jaunes et Google Maps, quelques mentions locales",s:2},
+      {t:"Présent sur 5+ annuaires avec NAP cohérent, quelques backlinks locaux",s:3},
+      {t:"NAP unifié sur 12+ annuaires, mentions presse locale, certifications et badges professionnels affichés",s:5}
+    ]
+  }
 ];
 let qIdx=0,qScores=[],qSel=null;
 const LETS=['A','B','C','D'];
-function renderQ(){document.getElementById('qBar').style.width=(qIdx/QS.length*100)+'%';if(qIdx>=QS.length){showResult();return;}const q=QS[qIdx];document.getElementById('qContent').innerHTML=`<div class="qb-step">Question ${qIdx+1} / ${QS.length} · ${q.p}</div><div class="qb-q">${q.q}</div><div class="qb-opts">${q.opts.map((o,i)=>`<button class="qb-opt" data-s="${o.s}" onclick="selOpt(this)"><span class="qb-letter">${LETS[i]}</span><span>${o.t}</span></button>`).join('')}</div><div class="qb-nav"><button class="btn-next" id="qNext" disabled onclick="nextQ()">${qIdx<QS.length-1?'Question suivante →':'Voir mon score →'}</button></div>`;qSel=null;}
+function renderQ(){document.getElementById('qBar').style.width=(qIdx/QS.length*100)+'%';if(qIdx>=QS.length){showResult();return;}const q=QS[qIdx];document.getElementById('qContent').innerHTML=`<div class="qb-step">Question ${qIdx+1} / ${QS.length} · <span style="color:var(--gold)">${q.p}</span></div><div class="qb-q">${q.q}</div>${q.hint?`<div style="font-size:.76rem;color:var(--muted);background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:4px;padding:8px 12px;margin-bottom:14px;line-height:1.6"><span style="color:var(--gold);font-weight:700;font-size:.7rem;letter-spacing:1px;text-transform:uppercase">Contexte · </span>${q.hint}</div>`:''}<div class="qb-opts">${q.opts.map((o,i)=>`<button class="qb-opt" data-s="${o.s}" onclick="selOpt(this)"><span class="qb-letter">${LETS[i]}</span><span>${o.t}</span></button>`).join('')}</div><div class="qb-nav"><button class="btn-next" id="qNext" disabled onclick="nextQ()">${qIdx<QS.length-1?'Question suivante →':'Voir mon score →'}</button></div>`;qSel=null;}
 function selOpt(el){document.querySelectorAll('.qb-opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');qSel=+el.dataset.s;document.getElementById('qNext').disabled=false;}
 function nextQ(){if(qSel===null)return;qScores.push(qSel);qIdx++;renderQ();}
 function showResult(){
