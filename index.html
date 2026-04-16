@@ -1168,9 +1168,9 @@ function switchTab(i){document.querySelectorAll('.tab-btn').forEach((b,j)=>{b.cl
 /* ── QUIZ PRISM ── */
 const QS=[
   {
-    p:'P — Présence & NAP',
-    q:'Ouvrez ChatGPT ou Perplexity et tapez <em>"[votre métier] [votre ville]"</em>. Quel est le résultat ?',
-    hint:'Exemple réel : "restaurant fruits de mer Saint-Malo" ou "kinésithérapeute Rennes centre"',
+    p:"P — Présence & NAP",
+    q:"Ouvrez ChatGPT ou Perplexity et tapez <em>\"[votre métier] [votre ville]\"</em>. Quel est le résultat ?",
+    hint:"Exemple : \"restaurant fruits de mer Saint-Malo\" ou \"kinésithérapeute Rennes centre\"",
     opts:[
       {t:"Mon établissement n'apparaît pas du tout dans la réponse",s:0},
       {t:"Je suis mentionné une fois, sans détails ni recommandation",s:2},
@@ -1179,9 +1179,9 @@ const QS=[
     ]
   },
   {
-    p:'I — Indexation IA',
-    q:'Votre fichier <code>robots.txt</code> autorise-t-il explicitement les crawlers des IA génératives ?',
-    hint:'GPTBot (OpenAI), PerplexityBot, ClaudeBot, Google-Extended — sans autorisation explicite, les LLM ne peuvent pas vous indexer',
+    p:"I — Indexation IA",
+    q:"Votre fichier <code>robots.txt</code> autorise-t-il explicitement les crawlers des IA génératives ?",
+    hint:"GPTBot (OpenAI), PerplexityBot, ClaudeBot, Google-Extended — sans autorisation explicite, les LLM ne peuvent pas vous indexer",
     opts:[
       {t:"Je ne sais pas ce qu'est un robots.txt",s:0},
       {t:"J'ai un robots.txt mais je n'ai pas vérifié les directives IA",s:1},
@@ -1190,9 +1190,9 @@ const QS=[
     ]
   },
   {
-    p:'R — Réputation sémantique',
-    q:'Comment qualifieriez-vous vos réponses aux avis Google ?',
-    hint:'Les LLM analysent le champ sémantique de vos réponses pour extraire des signaux de recommandation. Une réponse générique ("Merci !") ne génère aucun attribut positif exploitable.',
+    p:"R — Réputation sémantique",
+    q:"Comment qualifieriez-vous vos réponses aux avis Google ?",
+    hint:"Les LLM analysent le champ sémantique de vos réponses pour extraire des signaux de recommandation. Une réponse générique ne génère aucun attribut positif exploitable.",
     opts:[
       {t:"Je ne réponds pas ou très rarement à mes avis",s:0},
       {t:"Je réponds avec des formules courtes et génériques",s:1},
@@ -1201,9 +1201,9 @@ const QS=[
     ]
   },
   {
-    p:'S — Sémantique & Données structurées',
-    q:'Votre site intègre-t-il un balisage Schema.org <em>LocalBusiness</em> avec les attributs GEO essentiels ?',
-    hint:'Schema.org LocalBusiness avec @type, name, address, geo, openingHours, areaServed et priceRange est un signal de confiance majeur pour les LLM lors de l'entraînement et de la recherche augmentée (RAG).',
+    p:"S — Sémantique & Données structurées",
+    q:"Votre site intègre-t-il un balisage Schema.org <em>LocalBusiness</em> avec les attributs GEO essentiels ?",
+    hint:"Schema.org LocalBusiness avec @type, name, address, geo, openingHours, areaServed et priceRange est un signal de confiance majeur pour les LLM lors du retrieval augmenté (RAG).",
     opts:[
       {t:"Je ne sais pas ce qu'est Schema.org",s:0},
       {t:"Mon site a peut-être un Schema basique généré par mon CMS",s:1},
@@ -1212,25 +1212,25 @@ const QS=[
     ]
   },
   {
-    p:'M — Moteurs IA & Citations',
-    q:'Vos contenus web (fiches, descriptions, FAQ) sont-ils optimisés pour la réponse augmentée par retrieval (RAG) ?',
-    hint:'Les IA modernes utilisent le RAG pour enrichir leurs réponses en temps réel. Un contenu dense en entités nommées locales (ville, quartier, spécialité, comparatifs) multiplie les chances de citation dans les réponses générées.',
+    p:"M — Moteurs IA & Citations",
+    q:"Vos contenus web sont-ils optimisés pour la réponse augmentée par retrieval (RAG) ?",
+    hint:"Les IA modernes utilisent le RAG pour enrichir leurs réponses en temps réel. Un contenu dense en entités nommées locales multiplie les chances de citation dans les réponses générées.",
     opts:[
       {t:"Mon contenu web n'a pas évolué depuis plus d'un an",s:0},
       {t:"J'ai du contenu pertinent mais sans structure FAQ ni entités nommées locales",s:2},
-      {t:"Mon site contient des FAQ structurées et des comparatifs, mais sans optimisation RAG explicite",s:3},
+      {t:"Mon site contient des FAQ structurées mais sans optimisation RAG explicite",s:3},
       {t:"Mes contenus ciblent explicitement les requêtes IA locales avec entités, FAQ et données fraîches",s:5}
     ]
   },
   {
-    p:'E-E-A-T & Autorité locale',
-    q:'Comment évaluez-vous votre signal E-E-A-T (Expérience, Expertise, Autorité, Fiabilité) dans votre écosystème local ?',
-    hint:'Google et les LLM évaluent votre E-E-A-T via les mentions presse locale, les backlinks d'associations professionnelles, les certifications affichées et la cohérence de votre présence sur 12+ annuaires de référence.',
+    p:"E-E-A-T & Autorité locale",
+    q:"Comment évaluez-vous votre signal E-E-A-T dans votre écosystème local ?",
+    hint:"Google et les LLM évaluent votre E-E-A-T via les mentions presse locale, les backlinks d'associations professionnelles, les certifications affichées et la cohérence de votre présence sur 12+ annuaires.",
     opts:[
       {t:"Aucune mention presse, pas d'annuaires renseignés, pas de certifications visibles",s:0},
       {t:"Présent sur Pages Jaunes et Google Maps, quelques mentions locales",s:2},
       {t:"Présent sur 5+ annuaires avec NAP cohérent, quelques backlinks locaux",s:3},
-      {t:"NAP unifié sur 12+ annuaires, mentions presse locale, certifications et badges professionnels affichés",s:5}
+      {t:"NAP unifié sur 12+ annuaires, mentions presse, certifications et badges professionnels affichés",s:5}
     ]
   }
 ];
