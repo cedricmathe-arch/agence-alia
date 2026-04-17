@@ -175,10 +175,36 @@ input,textarea,select{font-family:var(--fb)}
 /* ══ ANIMATIONS ══ */
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
 .pulse{animation:pulse 2s infinite}
+
+/* ══ LOGIN ══ */
+#login-screen{position:fixed;inset:0;background:var(--navy);z-index:9999;display:flex;align-items:center;justify-content:center}
+.login-box{background:var(--navy-mid);border:1px solid rgba(201,168,76,.25);border-radius:10px;padding:48px 40px;width:100%;max-width:380px;text-align:center}
+.login-logo{font-family:var(--fd);font-size:42px;font-weight:700;letter-spacing:6px;background:linear-gradient(135deg,var(--gold-l),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+.login-sub{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:32px}
+.login-input{width:100%;padding:13px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);border-radius:6px;color:var(--white);font-family:var(--fb);font-size:14px;outline:none;transition:border-color .2s;text-align:center;letter-spacing:2px;margin-bottom:14px}
+.login-input:focus{border-color:var(--gold)}
+.login-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--gold-l),var(--gold));color:var(--navy);border:none;border-radius:6px;font-family:var(--fb);font-size:13px;font-weight:700;cursor:pointer;letter-spacing:.5px;text-transform:uppercase;transition:all .2s}
+.login-btn:hover{filter:brightness(1.1)}
+.login-error{color:#E74C3C;font-size:12px;margin-top:10px;display:none}
+.login-line{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin-bottom:28px}
+
 </style>
 </head>
 <body>
-<div class="app">
+
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">ALIA</div>
+    <div class="login-sub">Dashboard CRM · Accès privé</div>
+    <div class="login-line"></div>
+    <input type="password" class="login-input" id="login-pwd" placeholder="••••••••••••" 
+      onkeydown="if(event.key==='Enter')checkLogin()"/>
+    <button class="login-btn" onclick="checkLogin()">Accéder →</button>
+    <div class="login-error" id="login-error">Mot de passe incorrect</div>
+  </div>
+</div>
+
+<div class="app" id="app-content" style="display:none">
 
 <!-- ══ SIDEBAR ══ -->
 <aside class="sidebar" id="sidebar">
@@ -603,6 +629,26 @@ input,textarea,select{font-family:var(--fb)}
 </div>
 
 <script>
+
+// ══ LOGIN ══
+const _k = 'QHByb2plY3RDTUQvTFlOQTIwMjMr';
+function checkLogin(){
+  const pwd = document.getElementById('login-pwd').value;
+  if(btoa(pwd) === _k){
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app-content').style.display = 'flex';
+    sessionStorage.setItem('alia_auth','1');
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('login-pwd').value = '';
+    document.getElementById('login-pwd').focus();
+  }
+}
+if(sessionStorage.getItem('alia_auth')==='1'){
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app-content').style.display = 'flex';
+}
+
 // ══ DATA ══
 let DATA = {clients:[], devis:[], notes:'', nextClientId:1, nextDevisId:1};
 let editingClientId = null;
@@ -920,6 +966,7 @@ function renderClients(filter=''){
       <td><div style="display:flex;gap:6px">
         <button class="btn btn-outline btn-sm" onclick="editClient(${c.id})">✎ Modifier</button>
         <button class="btn btn-gold btn-sm" onclick="generateAudit(${c.id})">⬡ Audit</button>
+        <button class="btn btn-outline btn-sm" onclick="generateClientLink(${c.id})" style="color:var(--gold-l);border-color:rgba(226,196,122,.3)">⬡ Espace client</button>
         ${c.email?`<a href="https://mail.google.com/mail/?view=cm&to=${c.email}" target="_blank" class="btn btn-ghost btn-sm">✉</a>`:''}
       </div></td>
     </tr>`;
@@ -1141,6 +1188,19 @@ h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:20px;font-weight:600
 .print-btn{position:fixed;bottom:24px;right:24px;background:linear-gradient(135deg,#E2C47A,#C9A84C);color:#0B1F3A;border:none;padding:14px 24px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(201,168,76,.4);transition:all .2s}
 .print-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(201,168,76,.5)}
 @media print{.print-btn{display:none}}
+
+/* ══ LOGIN ══ */
+#login-screen{position:fixed;inset:0;background:var(--navy);z-index:9999;display:flex;align-items:center;justify-content:center}
+.login-box{background:var(--navy-mid);border:1px solid rgba(201,168,76,.25);border-radius:10px;padding:48px 40px;width:100%;max-width:380px;text-align:center}
+.login-logo{font-family:var(--fd);font-size:42px;font-weight:700;letter-spacing:6px;background:linear-gradient(135deg,var(--gold-l),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+.login-sub{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:32px}
+.login-input{width:100%;padding:13px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);border-radius:6px;color:var(--white);font-family:var(--fb);font-size:14px;outline:none;transition:border-color .2s;text-align:center;letter-spacing:2px;margin-bottom:14px}
+.login-input:focus{border-color:var(--gold)}
+.login-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--gold-l),var(--gold));color:var(--navy);border:none;border-radius:6px;font-family:var(--fb);font-size:13px;font-weight:700;cursor:pointer;letter-spacing:.5px;text-transform:uppercase;transition:all .2s}
+.login-btn:hover{filter:brightness(1.1)}
+.login-error{color:#E74C3C;font-size:12px;margin-top:10px;display:none}
+.login-line{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin-bottom:28px}
+
 </style>
 </head>
 <body>
@@ -1242,6 +1302,73 @@ h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:20px;font-weight:600
 </body>
 </html>`);
   win.document.close();
+}
+
+
+// ══ GENERATE CLIENT LINK ══
+function generateClientLink(id){
+  const cl = DATA.clients.find(x=>x.id===id);
+  if(!cl) return;
+  
+  const total = cl.scores.P+cl.scores.R+cl.scores.I+cl.scores.S+cl.scores.M;
+  const mois = new Date().toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+  
+  // Build URL params
+  const params = new URLSearchParams({
+    nom: cl.nom,
+    etab: cl.etab,
+    ville: cl.ville||'',
+    secteur: cl.secteur||'',
+    score: total,
+    P: cl.scores.P,
+    R: cl.scores.R,
+    I: cl.scores.I,
+    S: cl.scores.S,
+    M: cl.scores.M,
+    mois: mois,
+    msg: "Bonjour "+cl.nom.split(' ')[0]+", voici votre rapport PRISM du mois de "+mois+". Votre score évolue positivement — continuons sur cette lancée. N'hésitez pas à me contacter pour tout question.",
+    token: btoa(cl.id+'-'+Date.now()).slice(0,16)
+  });
+  
+  // Add score history if exists
+  if(cl.scoreHistory && cl.scoreHistory.length > 0){
+    const hist = cl.scoreHistory.map(h=>{
+      const d = new Date(h.date);
+      return d.toLocaleDateString('fr-FR',{month:'short'})+':'+h.total;
+    }).join(',');
+    params.set('hist', hist);
+  }
+  
+  const baseUrl = 'client_alia.html';
+  const fullUrl = baseUrl + '?' + params.toString();
+  
+  // Show modal with link + email option
+  const modal = document.createElement('div');
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+  modal.innerHTML = `
+    <div style="background:var(--navy-mid);border:1px solid rgba(201,168,76,.3);border-radius:10px;padding:28px;max-width:560px;width:100%">
+      <div style="font-family:var(--fd);font-size:20px;font-weight:600;margin-bottom:6px">Espace client généré</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:20px">${cl.etab} · Score PRISM ${total}/30</div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:8px">Lien à envoyer au client</div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);border-radius:6px;padding:12px;font-size:11px;color:var(--slate);word-break:break-all;margin-bottom:16px;font-family:monospace" id="client-link-text">${fullUrl}</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button onclick="navigator.clipboard.writeText('${fullUrl}');this.textContent='✓ Copié !'" style="padding:10px 18px;background:var(--gold);color:var(--navy);border:none;border-radius:6px;font-weight:700;font-size:12px;cursor:pointer">⬡ Copier le lien</button>
+        <a href="https://mail.google.com/mail/?view=cm&to=${cl.email||''}&su=${encodeURIComponent('Votre espace PRISM — Agence ALIA')}&body=${encodeURIComponent('Bonjour '+cl.nom.split(' ')[0]+',
+
+Voici votre espace PRISM personnel pour consulter votre rapport du mois de '+mois+' :
+
+'+fullUrl+'
+
+N'hésitez pas à me contacter pour toute question.
+
+Cordialement,
+Cédric Mathé — Agence ALIA
+07 70 45 13 31')}" target="_blank" style="padding:10px 18px;background:transparent;color:var(--gold);border:1px solid rgba(201,168,76,.4);border-radius:6px;font-weight:700;font-size:12px;cursor:pointer;text-decoration:none">✉ Envoyer par email</a>
+        <button onclick="this.closest('div[style*=fixed]').remove()" style="padding:10px 18px;background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,.1);border-radius:6px;font-size:12px;cursor:pointer">Fermer</button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click', e=>{ if(e.target===modal) modal.remove(); });
 }
 
 </script>
