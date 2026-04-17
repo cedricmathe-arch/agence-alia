@@ -176,35 +176,13 @@ input,textarea,select{font-family:var(--fb)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
 .pulse{animation:pulse 2s infinite}
 
-/* ══ LOGIN ══ */
-#login-screen{position:fixed;inset:0;background:var(--navy);z-index:9999;display:flex;align-items:center;justify-content:center}
-.login-box{background:var(--navy-mid);border:1px solid rgba(201,168,76,.25);border-radius:10px;padding:48px 40px;width:100%;max-width:380px;text-align:center}
-.login-logo{font-family:var(--fd);font-size:42px;font-weight:700;letter-spacing:6px;background:linear-gradient(135deg,var(--gold-l),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
-.login-sub{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:32px}
-.login-input{width:100%;padding:13px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);border-radius:6px;color:var(--white);font-family:var(--fb);font-size:14px;outline:none;transition:border-color .2s;text-align:center;letter-spacing:2px;margin-bottom:14px}
-.login-input:focus{border-color:var(--gold)}
-.login-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--gold-l),var(--gold));color:var(--navy);border:none;border-radius:6px;font-family:var(--fb);font-size:13px;font-weight:700;cursor:pointer;letter-spacing:.5px;text-transform:uppercase;transition:all .2s}
-.login-btn:hover{filter:brightness(1.1)}
-.login-error{color:#E74C3C;font-size:12px;margin-top:10px;display:none}
-.login-line{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin-bottom:28px}
-
 </style>
 </head>
 <body>
 
-<div id="login-screen">
-  <div class="login-box">
-    <div class="login-logo">ALIA</div>
-    <div class="login-sub">Dashboard CRM · Accès privé</div>
-    <div class="login-line"></div>
-    <input type="password" class="login-input" id="login-pwd" placeholder="••••••••••••" 
-      onkeydown="if(event.key==='Enter')checkLogin()"/>
-    <button class="login-btn" onclick="checkLogin()">Accéder →</button>
-    <div class="login-error" id="login-error">Mot de passe incorrect</div>
-  </div>
 </div>
 
-<div class="app" id="app-content" style="display:none;min-height:100vh">
+<div class="app" id="app-content">
 
 <!-- ══ SIDEBAR ══ -->
 <aside class="sidebar" id="sidebar">
@@ -630,29 +608,27 @@ input,textarea,select{font-family:var(--fb)}
 
 <script>
 
-// ══ LOGIN ══
-const _p1='@projectCMD',_p2='/LYNA2023+';
-function showApp(){
-  const ls = document.getElementById('login-screen');
-  if(ls) ls.style.display = 'none';
+
+
+// ══ LOGIN SIMPLE ══
+(function(){
+  if(sessionStorage.getItem('alia_ok')) return;
   const app = document.getElementById('app-content');
-  if(app){ app.style.display = 'flex'; }
-}
-function checkLogin(){
-  const pwd = document.getElementById('login-pwd').value;
-  if(pwd === _p1+_p2){
-    sessionStorage.setItem('alia_auth','1');
-    showApp();
-  } else {
-    const err = document.getElementById('login-error');
-    if(err) err.style.display = 'block';
-    document.getElementById('login-pwd').value = '';
-    document.getElementById('login-pwd').focus();
+  if(app) app.style.display = 'none';
+  
+  function askPwd(){
+    const p = window.prompt('Agence ALIA — Mot de passe requis :');
+    if(p === null){ askPwd(); return; }
+    if(p === '@projectCMD/LYNA2023+'){
+      sessionStorage.setItem('alia_ok','1');
+      if(app) app.style.display = 'flex';
+    } else {
+      alert('Mot de passe incorrect');
+      askPwd();
+    }
   }
-}
-document.addEventListener('DOMContentLoaded', function(){
-  if(sessionStorage.getItem('alia_auth')==='1') showApp();
-});
+  askPwd();
+})();
 
 // ══ DATA ══
 let DATA = {clients:[], devis:[], notes:'', nextClientId:1, nextDevisId:1};
@@ -1193,18 +1169,6 @@ h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:20px;font-weight:600
 .print-btn{position:fixed;bottom:24px;right:24px;background:linear-gradient(135deg,#E2C47A,#C9A84C);color:#0B1F3A;border:none;padding:14px 24px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(201,168,76,.4);transition:all .2s}
 .print-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(201,168,76,.5)}
 @media print{.print-btn{display:none}}
-
-/* ══ LOGIN ══ */
-#login-screen{position:fixed;inset:0;background:var(--navy);z-index:9999;display:flex;align-items:center;justify-content:center}
-.login-box{background:var(--navy-mid);border:1px solid rgba(201,168,76,.25);border-radius:10px;padding:48px 40px;width:100%;max-width:380px;text-align:center}
-.login-logo{font-family:var(--fd);font-size:42px;font-weight:700;letter-spacing:6px;background:linear-gradient(135deg,var(--gold-l),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
-.login-sub{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:32px}
-.login-input{width:100%;padding:13px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);border-radius:6px;color:var(--white);font-family:var(--fb);font-size:14px;outline:none;transition:border-color .2s;text-align:center;letter-spacing:2px;margin-bottom:14px}
-.login-input:focus{border-color:var(--gold)}
-.login-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--gold-l),var(--gold));color:var(--navy);border:none;border-radius:6px;font-family:var(--fb);font-size:13px;font-weight:700;cursor:pointer;letter-spacing:.5px;text-transform:uppercase;transition:all .2s}
-.login-btn:hover{filter:brightness(1.1)}
-.login-error{color:#E74C3C;font-size:12px;margin-top:10px;display:none}
-.login-line{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin-bottom:28px}
 
 </style>
 </head>
