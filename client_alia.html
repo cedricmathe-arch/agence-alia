@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Votre espace PRISM — Agence ALIA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --navy:#0B1F3A;--navy-mid:#112A4F;--navy-light:#1A3560;
+  --gold:#C9A84C;--gold-l:#E2C47A;--gold-d:#9A7A30;
+  --white:#fff;--off:#F4F6FA;--slate:#DDE2EA;--muted:#6B7A8D;
+  --green:#1A8A5A;--orange:#E67E22;--red:#C0392B;
+  --fd:'Cormorant Garamond',Georgia,serif;
+  --fb:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--navy);color:var(--white);min-height:100vh;-webkit-font-smoothing:antialiased}
+@media print{.no-print{display:none!important}body{background:#fff;color:#000}}
+
+/* ══ NOT FOUND ══ */
+#not-found{display:none;min-height:100vh;align-items:center;justify-content:center;text-align:center;padding:40px}
+#not-found.show{display:flex}
+
+/* ══ HEADER ══ */
+.header{background:var(--navy-mid);border-bottom:1px solid rgba(201,168,76,.15);padding:20px 32px;display:flex;align-items:center;justify-content:space-between}
+.header-logo{font-family:var(--fd);font-size:28px;font-weight:700;letter-spacing:4px;background:linear-gradient(135deg,var(--gold-l),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header-right{text-align:right}
+.header-client{font-size:14px;font-weight:600;color:var(--white)}
+.header-date{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* ══ GOLD LINE ══ */
+.gold-line{height:3px;background:linear-gradient(90deg,var(--gold-d),var(--gold-l),var(--gold-d))}
+
+/* ══ HERO SCORE ══ */
+.hero{padding:48px 32px 36px;max-width:1000px;margin:0 auto}
+.hero-label{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.hero-title{font-family:var(--fd);font-size:clamp(28px,4vw,42px);font-weight:600;line-height:1.1;margin-bottom:6px}
+.hero-etab{font-size:13px;color:var(--muted);margin-bottom:36px}
+
+.score-layout{display:grid;grid-template-columns:200px 1fr;gap:32px;align-items:center;background:var(--navy-mid);border:1px solid rgba(201,168,76,.2);border-radius:8px;padding:32px;margin-bottom:28px}
+.score-circle-wrap{text-align:center}
+.score-big{position:relative;width:140px;height:140px;margin:0 auto 12px}
+.score-big svg{transform:rotate(-90deg)}
+.score-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.score-num .num{font-family:var(--fd);font-size:42px;font-weight:700;color:var(--gold);line-height:1}
+.score-num .den{font-size:13px;color:var(--muted)}
+.score-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.score-meta{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.meta-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:16px}
+.meta-box .val{font-family:var(--fd);font-size:24px;font-weight:700;color:var(--gold);line-height:1}
+.meta-box .key{font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:1px}
+.meta-box .trend{font-size:11px;font-weight:700;margin-top:4px}
+.trend-up{color:var(--green)}
+.trend-down{color:var(--red)}
+.trend-stable{color:var(--muted)}
+
+/* ══ SECTION ══ */
+.section{max-width:1000px;margin:0 auto 24px;padding:0 32px}
+.section-card{background:var(--navy-mid);border:1px solid rgba(201,168,76,.12);border-radius:8px;overflow:hidden}
+.section-title{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid rgba(255,255,255,.06)}
+.section-title h2{font-family:var(--fd);font-size:18px;font-weight:600}
+.section-body{padding:24px}
+
+/* ══ PRISM PILIERS ══ */
+.pillar{margin-bottom:18px}
+.pillar:last-child{margin-bottom:0}
+.pillar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.pillar-name{font-size:13px;font-weight:600;color:var(--white)}
+.pillar-letter{font-family:var(--fd);font-size:18px;font-weight:700;color:var(--gold);margin-right:8px}
+.pillar-score{font-size:12px;font-weight:700}
+.pillar-bar{height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.pillar-fill{height:100%;border-radius:3px;transition:width 1s ease}
+.pillar-status{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:10px;margin-left:8px}
+
+/* ══ HISTORIQUE ══ */
+.history-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:10px}
+.history-item{text-align:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:12px 8px}
+.history-item .h-month{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.history-item .h-score{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--gold)}
+.history-item.current{border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
+.history-item.current .h-month{color:var(--gold)}
+
+/* ══ ACTIONS ══ */
+.action-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.action-item:last-child{border-bottom:none}
+.action-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.action-done{background:var(--green)}
+.action-next{background:var(--gold)}
+.action-text{font-size:13px;color:var(--slate);line-height:1.6}
+.action-tag{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:10px;margin-top:4px;display:inline-block}
+.tag-done{background:rgba(26,138,90,.15);color:#2ECC71}
+.tag-next{background:rgba(201,168,76,.15);color:var(--gold)}
+
+/* ══ MESSAGE ══ */
+.message-box{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.2);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:20px 24px}
+.message-from{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.message-text{font-size:14px;color:var(--slate);line-height:1.8}
+.message-sign{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+
+/* ══ CTA ══ */
+.cta-section{max-width:1000px;margin:0 auto 48px;padding:0 32px}
+.cta-box{background:var(--navy-mid);border:1px solid rgba(201,168,76,.2);border-radius:8px;padding:28px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.cta-text h3{font-family:var(--fd);font-size:18px;font-weight:600;margin-bottom:4px}
+.cta-text p{font-size:13px;color:var(--muted)}
+.btn-gold{display:inline-flex;align-items:center;gap:6px;padding:12px 24px;background:linear-gradient(135deg,var(--gold-l),var(--gold));color:var(--navy);border:none;border-radius:6px;font-family:var(--fb);font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;white-space:nowrap}
+.btn-gold:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn-outline{display:inline-flex;align-items:center;gap:6px;padding:12px 24px;background:transparent;color:var(--gold);border:1px solid rgba(201,168,76,.4);border-radius:6px;font-family:var(--fb);font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s}
+.btn-outline:hover{background:rgba(201,168,76,.08)}
+
+/* ══ FOOTER ══ */
+footer{background:var(--navy-mid);border-top:1px solid rgba(201,168,76,.1);padding:20px 32px;text-align:center}
+footer p{font-size:11px;color:var(--muted)}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:600px){
+  .header{padding:16px 20px}
+  .hero{padding:32px 20px 24px}
+  .section{padding:0 20px}
+  .cta-section{padding:0 20px}
+  .score-layout{grid-template-columns:1fr}
+  .score-meta{grid-template-columns:1fr 1fr}
+  .cta-box{flex-direction:column;text-align:center}
+}
+
+/* ══ ANIMATION ══ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeUp .5s ease forwards}
+.fade-in:nth-child(2){animation-delay:.1s}
+.fade-in:nth-child(3){animation-delay:.2s}
+</style>
+</head>
+<body>
+
+<!-- Not found -->
+<div id="not-found">
+  <div style="text-align:center">
+    <div style="font-family:var(--fd);font-size:48px;color:var(--gold);margin-bottom:16px">ALIA</div>
+    <div style="font-size:16px;color:var(--slate);margin-bottom:8px">Lien expiré ou invalide</div>
+    <div style="font-size:13px;color:var(--muted)">Contactez Cédric Mathé pour obtenir votre accès.<br/>07 70 45 13 31 · contact@agence-alia.fr</div>
+  </div>
+</div>
+
+<!-- App -->
+<div id="client-app" style="display:none">
+
+  <div class="gold-line"></div>
+  <header class="header no-print">
+    <div class="header-logo">ALIA</div>
+    <div class="header-right">
+      <div class="header-client" id="h-client">—</div>
+      <div class="header-date" id="h-date">—</div>
+    </div>
+  </header>
+
+  <div class="hero fade-in">
+    <div class="hero-label">Votre espace PRISM personnel</div>
+    <div class="hero-title" id="hero-title">Rapport mensuel</div>
+    <div class="hero-etab" id="hero-etab">—</div>
+
+    <div class="score-layout">
+      <div class="score-circle-wrap">
+        <div class="score-big">
+          <svg width="140" height="140" viewBox="0 0 140 140">
+            <circle cx="70" cy="70" r="58" stroke="rgba(255,255,255,.08)" stroke-width="10" fill="none"/>
+            <circle cx="70" cy="70" r="58" stroke="#C9A84C" stroke-width="10" fill="none"
+              stroke-dasharray="364" stroke-dashoffset="364" id="score-arc" stroke-linecap="round"/>
+          </svg>
+          <div class="score-num">
+            <div class="num" id="score-num">—</div>
+            <div class="den">/ 30</div>
+          </div>
+        </div>
+        <div class="score-label">Score PRISM</div>
+      </div>
+      <div class="score-meta">
+        <div class="meta-box">
+          <div class="val" id="meta-pct">—</div>
+          <div class="key">Visibilité IA</div>
+        </div>
+        <div class="meta-box">
+          <div class="val" id="meta-level" style="font-size:16px">—</div>
+          <div class="key">Niveau</div>
+          <div class="trend" id="meta-trend">—</div>
+        </div>
+        <div class="meta-box">
+          <div class="val" id="meta-next">—</div>
+          <div class="key">Prochaine action</div>
+        </div>
+        <div class="meta-box">
+          <div class="val" id="meta-since">—</div>
+          <div class="key">Mois de suivi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Piliers PRISM -->
+  <div class="section fade-in">
+    <div class="section-card">
+      <div class="section-title">
+        <h2>Les 5 piliers PRISM</h2>
+        <span style="font-size:11px;color:var(--muted)">Score sur 5 par pilier</span>
+      </div>
+      <div class="section-body" id="piliers-body">—</div>
+    </div>
+  </div>
+
+  <!-- Historique -->
+  <div class="section fade-in" id="history-section" style="display:none">
+    <div class="section-card">
+      <div class="section-title"><h2>Évolution du Score PRISM</h2></div>
+      <div class="section-body">
+        <div class="history-grid" id="history-body"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="section fade-in" id="actions-section" style="display:none">
+    <div class="section-card">
+      <div class="section-title"><h2>Actions ce mois</h2></div>
+      <div class="section-body" id="actions-body"></div>
+    </div>
+  </div>
+
+  <!-- Message -->
+  <div class="section fade-in" id="message-section" style="display:none">
+    <div class="section-card">
+      <div class="section-title"><h2>Message de votre consultant</h2></div>
+      <div class="section-body">
+        <div class="message-box">
+          <div class="message-from">Cédric Mathé · Agence ALIA</div>
+          <div class="message-text" id="message-text">—</div>
+          <div class="message-sign">Cédric Mathé — Fondateur Agence ALIA · 07 70 45 13 31</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section fade-in no-print">
+    <div class="cta-box">
+      <div class="cta-text">
+        <h3>Une question sur votre rapport ?</h3>
+        <p>Je suis disponible du lundi au vendredi, 9h–18h.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a id="cta-email" href="mailto:contact@agence-alia.fr" class="btn-gold">✉ Contacter Cédric</a>
+        <a href="tel:+33770451331" class="btn-outline">📞 07 70 45 13 31</a>
+        <button class="btn-outline no-print" onclick="window.print()">⬇ Télécharger PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Agence ALIA · CMD Cédric Mathé Digital · contact@agence-alia.fr · agence-alia.fr</p>
+    <p style="margin-top:4px;font-size:10px;opacity:.5">Document confidentiel — réservé à l'usage exclusif du destinataire</p>
+  </footer>
+
+</div>
+
+<script>
+// ══ LOAD CLIENT DATA FROM URL PARAMS ══
+function getParam(key){
+  return new URLSearchParams(window.location.search).get(key);
+}
+
+function scoreColor(s, max){
+  const p = s/max*100;
+  return p>=70?'#1A8A5A':p>=45?'#E67E22':'#C0392B';
+}
+
+function init(){
+  // Get all params
+  const nom = getParam('nom');
+  const etab = getParam('etab');
+  const ville = getParam('ville');
+  const secteur = getParam('secteur');
+  const total = parseInt(getParam('score')) || 0;
+  const mois = getParam('mois') || new Date().toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+  const message = getParam('msg') ? decodeURIComponent(getParam('msg')) : '';
+  const actions = getParam('actions') ? decodeURIComponent(getParam('actions')) : '';
+  const history = getParam('hist') ? decodeURIComponent(getParam('hist')) : '';
+  const P = parseInt(getParam('P')) || 0;
+  const R = parseInt(getParam('R')) || 0;
+  const I = parseInt(getParam('I')) || 0;
+  const S = parseInt(getParam('S')) || 0;
+  const M = parseInt(getParam('M')) || 0;
+  const token = getParam('token');
+
+  // Validate — needs at least etab and score
+  if(!etab || !total){
+    document.getElementById('not-found').classList.add('show');
+    return;
+  }
+
+  document.getElementById('client-app').style.display = 'block';
+
+  // Header
+  document.getElementById('h-client').textContent = (nom||'') + (etab?' · '+etab:'');
+  document.getElementById('h-date').textContent = 'Rapport ' + mois;
+  document.getElementById('hero-title').textContent = 'Rapport PRISM — ' + mois;
+  document.getElementById('hero-etab').textContent = [etab, secteur, ville].filter(Boolean).join(' · ');
+
+  // Score arc animation
+  const pct = total/30;
+  const circumference = 364;
+  const offset = circumference - (pct * circumference);
+  setTimeout(()=>{
+    const arc = document.getElementById('score-arc');
+    arc.style.transition = 'stroke-dashoffset 1.2s ease';
+    arc.setAttribute('stroke-dashoffset', offset);
+    arc.setAttribute('stroke', scoreColor(total, 30));
+  }, 300);
+
+  // Score number
+  let cur = 0;
+  const counter = setInterval(()=>{
+    cur = Math.min(cur+1, total);
+    document.getElementById('score-num').textContent = cur;
+    if(cur >= total) clearInterval(counter);
+  }, 40);
+
+  // Meta
+  const pctVal = Math.round(pct*100);
+  document.getElementById('meta-pct').textContent = pctVal + '%';
+  const level = pctVal>=70?'Bon':pctVal>=45?'Partiel':'Faible';
+  const levelColor = pctVal>=70?'#2ECC71':pctVal>=45?'#F39C12':'#E74C3C';
+  document.getElementById('meta-level').style.color = levelColor;
+  document.getElementById('meta-level').textContent = level;
+  document.getElementById('meta-trend').innerHTML = pctVal>=70?'<span class="trend-up">↑ En progression</span>':pctVal>=45?'<span class="trend-stable">→ En cours</span>':'<span class="trend-down">↓ À optimiser</span>';
+  document.getElementById('meta-next').textContent = pctVal>=70?'Maintien':'Optimisation';
+  document.getElementById('meta-since').textContent = mois.split(' ')[1] || '2026';
+
+  // Piliers
+  const piliers = [
+    {k:'P', name:'Présence & NAP', score:P},
+    {k:'R', name:'Réputation & Avis', score:R},
+    {k:'I', name:'Indexation IA', score:I},
+    {k:'S', name:'Sémantique', score:S},
+    {k:'M', name:'Moteurs IA', score:M},
+  ];
+
+  document.getElementById('piliers-body').innerHTML = piliers.map(p=>{
+    const pp = p.score/5*100;
+    const col = pp>=80?'#1A8A5A':pp>=60?'#E67E22':'#C0392B';
+    const lbl = pp>=80?'Fort':pp>=60?'Partiel':'À optimiser';
+    return `<div class="pillar">
+      <div class="pillar-header">
+        <div><span class="pillar-letter">${p.k}</span><span class="pillar-name">${p.name}</span><span class="pillar-status" style="background:${col}22;color:${col};border:1px solid ${col}44">${lbl}</span></div>
+        <div class="pillar-score" style="color:${col}">${p.score}/5</div>
+      </div>
+      <div class="pillar-bar"><div class="pillar-fill" style="width:${pp}%;background:${col}"></div></div>
+    </div>`;
+  }).join('');
+
+  // History
+  if(history){
+    const hist = history.split(',').map(h=>{
+      const [m,s] = h.split(':');
+      return {m, s:parseInt(s)};
+    });
+    if(hist.length > 0){
+      document.getElementById('history-section').style.display = 'block';
+      document.getElementById('history-body').innerHTML = hist.map((h,i)=>`
+        <div class="history-item${i===hist.length-1?' current':''}">
+          <div class="h-month">${h.m}</div>
+          <div class="h-score">${h.s}</div>
+        </div>`).join('') +
+        `<div class="history-item current">
+          <div class="h-month">${mois.split(' ')[0].slice(0,3)}</div>
+          <div class="h-score">${total}</div>
+        </div>`;
+    }
+  }
+
+  // Actions
+  if(actions){
+    document.getElementById('actions-section').style.display = 'block';
+    const acts = actions.split('|').map(a=>{
+      const done = a.startsWith('✓');
+      const text = a.replace(/^[✓→]\s*/,'');
+      return `<div class="action-item">
+        <div class="action-dot ${done?'action-done':'action-next'}"></div>
+        <div>
+          <div class="action-text">${text}</div>
+          <span class="action-tag ${done?'tag-done':'tag-next'}">${done?'Réalisé':'En cours'}</span>
+        </div>
+      </div>`;
+    });
+    document.getElementById('actions-body').innerHTML = acts.join('');
+  }
+
+  // Message
+  if(message){
+    document.getElementById('message-section').style.display = 'block';
+    document.getElementById('message-text').textContent = message;
+  }
+
+  // CTA email
+  const subject = encodeURIComponent('Question rapport PRISM — ' + (etab||''));
+  const body = encodeURIComponent('Bonjour Cédric,\n\nJe souhaite échanger sur mon rapport PRISM de ' + mois + '.\n\nCordialement');
+  document.getElementById('cta-email').href = 'https://mail.google.com/mail/?view=cm&to=contact@agence-alia.fr&su='+subject+'&body='+body;
+}
+
+init();
+</script>
+</body>
+</html>
