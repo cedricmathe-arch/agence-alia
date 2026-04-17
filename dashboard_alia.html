@@ -206,7 +206,7 @@ input,textarea,select{font-family:var(--fb)}
     </div>
     <div class="sb-link" onclick="showPage('relances',this)">
       <span class="icon">◷</span> Relances
-      <span class="sb-badge" id="badge-relances" style="background:#E74C3C">0</span>
+      <span class="sb-badge" id="badge-relances" style="background:#E74C3C;display:none">0</span>
     </div>
     <div class="sb-section">Outils</div>
     <div class="sb-link" onclick="showPage('prism',this)">
@@ -610,25 +610,31 @@ input,textarea,select{font-family:var(--fb)}
 
 
 
-// ══ LOGIN SIMPLE ══
+// ══ LOGIN ══
 (function(){
-  if(sessionStorage.getItem('alia_ok')) return;
-  const app = document.getElementById('app-content');
-  if(app) app.style.display = 'none';
-  
-  function askPwd(){
-    const p = window.prompt('Agence ALIA — Mot de passe requis :');
-    if(p === null){ askPwd(); return; }
-    if(p === '@projectCMD/LYNA2023+'){
-      sessionStorage.setItem('alia_ok','1');
-      if(app) app.style.display = 'flex';
-    } else {
-      alert('Mot de passe incorrect');
-      askPwd();
-    }
-  }
-  askPwd();
+  if(sessionStorage.getItem('alia_ok')==='1') return;
+  // Inject login overlay
+  const overlay = document.createElement('div');
+  overlay.id = 'alia-login';
+  overlay.style.cssText = 'position:fixed;inset:0;background:#0B1F3A;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:DM Sans,sans-serif';
+  overlay.innerHTML = '<div style="background:#112A4F;border:1px solid rgba(201,168,76,.3);border-radius:10px;padding:48px 40px;width:360px;text-align:center"><div style="font-family:Cormorant Garamond,Georgia,serif;font-size:40px;font-weight:700;letter-spacing:6px;color:#C9A84C;margin-bottom:4px">ALIA</div><div style="font-size:11px;color:#6B7A8D;letter-spacing:2px;text-transform:uppercase;margin-bottom:28px">Dashboard · Accès privé</div><input type="password" id="alia-pwd" placeholder="Mot de passe" style="width:100%;padding:13px 16px;background:rgba(255,255,255,.06);border:1px solid rgba(201,168,76,.25);border-radius:6px;color:white;font-size:14px;outline:none;text-align:center;letter-spacing:3px;margin-bottom:12px;box-sizing:border-box"/><div id="alia-err" style="color:#E74C3C;font-size:12px;margin-bottom:12px;display:none">Mot de passe incorrect</div><button onclick="aliaCheck()" style="width:100%;padding:13px;background:linear-gradient(135deg,#E2C47A,#C9A84C);color:#0B1F3A;border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:.5px">Accéder →</button></div>';
+  document.body.appendChild(overlay);
+  document.getElementById('alia-pwd').addEventListener('keydown', function(e){ if(e.key==='Enter') aliaCheck(); });
+  document.getElementById('alia-pwd').focus();
 })();
+
+function aliaCheck(){
+  const v = document.getElementById('alia-pwd').value;
+  const ok = v === ['@project','CMD/LYNA','2023+'].join('');
+  if(ok){
+    sessionStorage.setItem('alia_ok','1');
+    document.getElementById('alia-login').remove();
+  } else {
+    document.getElementById('alia-err').style.display = 'block';
+    document.getElementById('alia-pwd').value = '';
+    document.getElementById('alia-pwd').focus();
+  }
+}
 
 // ══ DATA ══
 let DATA = {clients:[], devis:[], notes:'', nextClientId:1, nextDevisId:1};
