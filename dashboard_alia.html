@@ -204,7 +204,7 @@ input,textarea,select{font-family:var(--fb)}
   </div>
 </div>
 
-<div class="app" id="app-content" style="display:none">
+<div class="app" id="app-content" style="display:none;min-height:100vh">
 
 <!-- ══ SIDEBAR ══ -->
 <aside class="sidebar" id="sidebar">
@@ -631,23 +631,28 @@ input,textarea,select{font-family:var(--fb)}
 <script>
 
 // ══ LOGIN ══
-const _k = 'QHByb2plY3RDTUQvTFlOQTIwMjMr';
+const _p1='@projectCMD',_p2='/LYNA2023+';
+function showApp(){
+  const ls = document.getElementById('login-screen');
+  if(ls) ls.style.display = 'none';
+  const app = document.getElementById('app-content');
+  if(app){ app.style.display = 'flex'; }
+}
 function checkLogin(){
   const pwd = document.getElementById('login-pwd').value;
-  if(btoa(pwd) === _k){
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app-content').style.display = 'flex';
+  if(pwd === _p1+_p2){
     sessionStorage.setItem('alia_auth','1');
+    showApp();
   } else {
-    document.getElementById('login-error').style.display = 'block';
+    const err = document.getElementById('login-error');
+    if(err) err.style.display = 'block';
     document.getElementById('login-pwd').value = '';
     document.getElementById('login-pwd').focus();
   }
 }
-if(sessionStorage.getItem('alia_auth')==='1'){
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app-content').style.display = 'flex';
-}
+document.addEventListener('DOMContentLoaded', function(){
+  if(sessionStorage.getItem('alia_auth')==='1') showApp();
+});
 
 // ══ DATA ══
 let DATA = {clients:[], devis:[], notes:'', nextClientId:1, nextDevisId:1};
