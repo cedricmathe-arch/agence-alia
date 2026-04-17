@@ -477,6 +477,45 @@ footer{background:var(--navy-mid);border-top:1px solid rgba(201,168,76,.14);padd
   .particle{animation:none}
   .btn-primary,.btn,.btn-gold{transition:none}
 }
+.search-wrap{max-width:560px;margin:0 auto 36px;position:relative;}
+.search-input-row{position:relative;display:flex;align-items:center;}
+.search-icon{position:absolute;left:18px;color:var(--gold);font-size:17px;pointer-events:none;z-index:2;}
+.search-field{width:100%;padding:15px 18px 15px 48px;font-family:var(--fb);font-size:15px;font-weight:400;color:var(--white);background:rgba(255,255,255,.05);border:1.5px solid rgba(201,168,76,.3);border-radius:10px;outline:none;transition:border-color .25s,background .25s,box-shadow .25s;letter-spacing:.2px;}
+.search-field::placeholder{color:var(--muted);}
+.search-field:focus{border-color:var(--gold);background:rgba(201,168,76,.06);box-shadow:0 0 0 3px rgba(201,168,76,.1);}
+.search-clear{position:absolute;right:14px;background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:4px;line-height:1;display:none;transition:color .2s;}
+.search-clear:hover{color:var(--gold);}
+.search-clear.visible{display:block;}
+.search-dropdown{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--navy);border:1px solid rgba(201,168,76,.28);border-radius:10px;overflow:hidden;z-index:100;box-shadow:0 16px 48px rgba(0,0,0,.4);display:none;}
+.search-dropdown.open{display:block;animation:fadeUp .18s ease;}
+.s-suggestion{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;cursor:pointer;transition:background .15s;border-bottom:1px solid rgba(255,255,255,.04);}
+.s-suggestion:last-child{border-bottom:none;}
+.s-suggestion:hover,.s-suggestion.focused{background:rgba(201,168,76,.1);}
+.s-sug-left{display:flex;align-items:center;gap:11px;}
+.s-sug-icon{font-size:16px;width:24px;text-align:center;flex-shrink:0;}
+.s-sug-name{font-size:14px;color:var(--white);font-weight:500;}
+.s-sug-name mark{background:none;color:var(--gold-l);font-weight:700;}
+.s-sug-cat{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);opacity:.7;padding:3px 8px;border:1px solid rgba(201,168,76,.25);border-radius:20px;flex-shrink:0;}
+.search-empty{padding:20px 18px;text-align:center;font-size:13px;color:var(--muted);}
+.search-result-info{max-width:560px;margin:0 auto 32px;display:none;animation:fadeUp .3s ease;}
+.search-result-info.show{display:block;}
+.sri-category{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.28);border-radius:20px;padding:6px 16px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.sri-example{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-left:3px solid var(--gold);border-radius:8px;padding:14px 18px;font-size:13px;color:var(--slate);line-height:1.7;}
+.sri-example strong{color:var(--gold-l);display:block;margin-bottom:4px;font-size:12px;letter-spacing:1px;text-transform:uppercase;}
+
+.demo-panel{display:none;max-width:900px;margin:0 auto;}
+.demo-panel.show{display:grid;grid-template-columns:1fr 1fr;gap:16px;animation:fadeUp .4s ease;}
+.d-col{border-radius:var(--r);overflow:hidden;}
+.d-col-head{padding:11px 18px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+.before .d-col-head{background:var(--red);color:var(--white);}
+.after  .d-col-head{background:var(--green);color:var(--white);}
+.d-col-body{background:var(--navy);border:1px solid rgba(255,255,255,.07);border-top:none;padding:20px;}
+.d-query{font-size:12px;color:var(--muted);margin-bottom:8px;font-style:italic;}
+.d-query strong{color:var(--gold-l);font-style:normal;}
+.d-resp{font-size:13px;color:var(--slate);line-height:1.8;}
+.d-resp .bad{color:#E74C3C;font-style:italic;}
+.d-resp .good{color:var(--gold-l);font-weight:600;}
+
 </style>
 </head>
 <body>
@@ -713,32 +752,105 @@ footer{background:var(--navy-mid);border-top:1px solid rgba(201,168,76,.14);padd
 </section>
 
 <!-- ═══ DEMO TABS ═══ -->
-<section id="demo" aria-label="Résultats avant et après ALIA par secteur">
-  <div class="section-head">
-    <p class="label fi">Résultats concrets</p>
-    <h2 class="fi">Ce que ça change<br/>pour votre secteur</h2>
+<section id="demo" aria-label="Démonstration avant après — résultats IA">
+  <div class="demo-head">
+    <p class="label anim">Démonstration en direct</p>
+    <h2 class="anim" data-d="1">Ce que l'IA dit<br/>de votre établissement</h2>
+    <p class="anim" data-d="2">Tapez votre métier pour découvrir votre cas concret</p>
   </div>
-  <div class="tabs fi" role="tablist">
-    <button class="tab-btn active" role="tab" aria-selected="true" onclick="switchTab(0)">🔧 Artisan & BTP</button>
-    <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab(1)">🍽️ Restauration</button>
-    <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab(2)">🩺 Santé & Libéral</button>
-    <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab(3)">🛍️ Commerce local</button>
+
+  <div class="search-wrap anim" data-d="3">
+    <div class="search-input-row">
+      <span class="search-icon" aria-hidden="true">⌕</span>
+      <input
+        type="search"
+        id="searchField"
+        class="search-field"
+        placeholder="Ex : boulanger, kinésithérapeute, avocat…"
+        autocomplete="off"
+        aria-label="Recherchez votre métier ou secteur"
+        aria-autocomplete="list"
+        aria-controls="searchDropdown"
+        aria-haspopup="listbox"
+        role="combobox"
+        aria-expanded="false"
+      />
+      <button class="search-clear" id="searchClear" aria-label="Effacer la recherche">✕</button>
+    </div>
+    <div class="search-dropdown" id="searchDropdown" role="listbox" aria-label="Suggestions de métiers"></div>
   </div>
-  <div class="tab-content active" id="tab-0" role="tabpanel">
-    <div class="ba-card"><span class="ba-label before">Avant ALIA</span><div class="ba-sector">Artisan & BTP — Bretagne</div><ul class="ba-items"><li>Invisible sur ChatGPT et Perplexity</li><li>Fiche Google incomplète, sans photos ni posts</li><li>NAP incohérent entre annuaires et site</li><li>GPTBot bloqué dans le robots.txt</li><li>Aucun avis récent depuis plus d'un an</li></ul><div class="ba-score"><span class="bs-num before">2.1</span><span class="bs-label">/ 10 · Score PRISM</span></div></div>
-    <div class="ba-card after"><span class="ba-label after-lbl">Après ALIA</span><div class="ba-sector">Artisan & BTP — Bretagne</div><ul class="ba-items"><li>Cité en 1ère position sur ChatGPT, Gemini &amp; Perplexity</li><li>Fiche Google 5★ avec photos &amp; posts mensuels</li><li>NAP unifié sur 12 annuaires locaux</li><li>GPTBot &amp; PerplexityBot autorisés et indexés</li><li>+23 avis collectés en 60 jours</li></ul><div class="ba-score"><span class="bs-num after-num">8.4</span><span class="bs-label">/ 10 · Score PRISM</span></div></div>
+
+  <div class="search-result-info" id="searchResultInfo" aria-live="polite">
+    <div class="sri-category" id="sriCategory"></div>
+    <div class="sri-example" id="sriExample"></div>
   </div>
-  <div class="tab-content" id="tab-1" role="tabpanel">
-    <div class="ba-card"><span class="ba-label before">Avant ALIA</span><div class="ba-sector">Restauration — Normandie</div><ul class="ba-items"><li>Absent des réponses IA sur "restaurant [ville]"</li><li>Contenu non structuré en Schema.org</li><li>Horaires incorrects sur Google</li><li>Taux de réponse aux avis inférieur à 20%</li><li>Site non indexable par les bots IA</li></ul><div class="ba-score"><span class="bs-num before">1.8</span><span class="bs-label">/ 10 · Score PRISM</span></div></div>
-    <div class="ba-card after"><span class="ba-label after-lbl">Après ALIA</span><div class="ba-sector">Restauration — Normandie</div><ul class="ba-items"><li>Top-3 sur ChatGPT, Gemini &amp; Perplexity</li><li>Contenu structuré Schema.org complet</li><li>Horaires synchronisés sur 3 plateformes</li><li>Taux de réponse aux avis 100%</li><li>Site pleinement crawlable, indexation parfaite</li></ul><div class="ba-score"><span class="bs-num after-num">8.7</span><span class="bs-label">/ 10 · Score PRISM</span></div></div>
+
+  <div id="d-restaurant" class="demo-panel show">
+    <div class="d-col before">
+      <div class="d-col-head">AVANT ALIA</div>
+      <div class="d-col-body">
+        <p class="d-query">ChatGPT : <strong>« meilleur restaurant fruits de mer Saint-Malo »</strong></p>
+        <div class="d-resp">Voici les tables recommandées à Saint-Malo :<br/><br/>• Le Chalutier — fraîcheur garantie<br/>• Chez Marie — service impeccable<br/>• La Criée — vue sur le port<br/><br/><span class="bad">⚠ Le Homard Breton — Des avis récents signalent des délais d'attente et un accueil décevant. Non retenu.</span></div>
+      </div>
+    </div>
+    <div class="d-col after">
+      <div class="d-col-head">APRÈS ALIA</div>
+      <div class="d-col-body">
+        <p class="d-query">ChatGPT : <strong>« meilleur restaurant fruits de mer Saint-Malo »</strong></p>
+        <div class="d-resp">Mes meilleures adresses intra-muros :<br/><br/><span class="good">★ Le Homard Breton</span><br/>&nbsp;&nbsp;Homards viviers, huîtres de la baie et plateau Royal.<br/>&nbsp;&nbsp;Service attentionné, cadre authentique.<br/><br/><span class="good">✓ Recommandé pour les fruits de mer frais<br/>&nbsp;&nbsp;et l'expérience brasserie maritime.</span></div>
+      </div>
+    </div>
   </div>
-  <div class="tab-content" id="tab-2" role="tabpanel">
-    <div class="ba-card"><span class="ba-label before">Avant ALIA</span><div class="ba-sector">Santé & Profession libérale — Bretagne</div><ul class="ba-items"><li>Invisible dans les requêtes IA locales</li><li>Aucun Schema.org métier spécifique</li><li>Prise de rdv en ligne non synchronisée</li><li>Pas de FAQ patient ou client sur le site</li><li>Contenu non mis à jour, signaux E-E-A-T absents</li></ul><div class="ba-score"><span class="bs-num before">2.5</span><span class="bs-label">/ 10 · Score PRISM</span></div></div>
-    <div class="ba-card after"><span class="ba-label after-lbl">Après ALIA</span><div class="ba-sector">Santé & Profession libérale — Bretagne</div><ul class="ba-items"><li>Cité en 1ère réponse sur 3 IA testées</li><li>Schema.org spécialisé déployé</li><li>Prise de rdv intégrée au Knowledge Graph</li><li>FAQ optimisée IA, contenu E-E-A-T complet</li><li>Diplômes, expérience, certifications valorisés</li></ul><div class="ba-score"><span class="bs-num after-num">8.9</span><span class="bs-label">/ 10 · Score PRISM</span></div></div>
+
+  <div id="d-notaire" class="demo-panel">
+    <div class="d-col before">
+      <div class="d-col-head">AVANT ALIA</div>
+      <div class="d-col-body">
+        <p class="d-query">Perplexity : <strong>« notaire disponible et réactif Rennes »</strong></p>
+        <div class="d-resp">Notaires recommandés à Rennes :<br/><br/>• Maître Leblanc — spécialiste immobilier<br/>• Étude Dupont — succession et famille<br/><br/><span class="bad">⚠ Étude Morvan — Avis mentionnant des délais de réponse de plusieurs semaines. Peu recommandé pour les urgences.</span></div>
+      </div>
+    </div>
+    <div class="d-col after">
+      <div class="d-col-head">APRÈS ALIA</div>
+      <div class="d-col-body">
+        <p class="d-query">Perplexity : <strong>« notaire disponible et réactif Rennes »</strong></p>
+        <div class="d-resp">Études notariales réputées à Rennes :<br/><br/><span class="good">★ Étude Morvan</span><br/>&nbsp;&nbsp;Immobilier, successions, droit de la famille.<br/>&nbsp;&nbsp;Réactivité reconnue, rendez-vous sous 48h.<br/><br/><span class="good">✓ Recommandé pour la disponibilité<br/>&nbsp;&nbsp;et le sérieux des conseils.</span></div>
+      </div>
+    </div>
   </div>
-  <div class="tab-content" id="tab-3" role="tabpanel">
-    <div class="ba-card"><span class="ba-label before">Avant ALIA</span><div class="ba-sector">Commerce & Services locaux — Normandie</div><ul class="ba-items"><li>Site vitrine sans contenu local ou géolocalisé</li><li>Aucun cas client ni témoignage structuré</li><li>Pas de Schema.org LocalBusiness complet</li><li>Visibilité reposant uniquement sur le bouche-à-oreille</li><li>Zéro présence dans les réponses IA locales</li></ul><div class="ba-score"><span class="bs-num before">1.5</span><span class="bs-label">/ 10 · Score PRISM</span></div></div>
-    <div class="ba-card after"><span class="ba-label after-lbl">Après ALIA</span><div class="ba-sector">Commerce & Services locaux — Normandie</div><ul class="ba-items"><li>Pages de contenu géolocalisées par zone</li><li>Cas clients et témoignages structurés en Schema.org</li><li>LocalBusiness + données structurées déployés</li><li>Cité sur ChatGPT, Gemini &amp; Perplexity en local</li><li>+40% de nouveaux contacts en 90 jours</li></ul><div class="ba-score"><span class="bs-num after-num">8.2</span><span class="bs-label">/ 10 · Score PRISM</span></div></div>
+
+  <div id="d-comptable" class="demo-panel">
+    <div class="d-col before">
+      <div class="d-col-head">AVANT ALIA</div>
+      <div class="d-col-body">
+        <p class="d-query">Google AI : <strong>« expert-comptable TPE Avranches »</strong></p>
+        <div class="d-resp">Cabinets comptables à Avranches :<br/><br/>• Cabinet Leroy — bonne réputation<br/>• Exco Normandie — structure régionale<br/><br/><span class="bad">⚠ Cabinet Renard — Clients signalant un manque de pédagogie et des erreurs de déclaration. Non recommandé.</span></div>
+      </div>
+    </div>
+    <div class="d-col after">
+      <div class="d-col-head">APRÈS ALIA</div>
+      <div class="d-col-body">
+        <p class="d-query">Google AI : <strong>« expert-comptable TPE Avranches »</strong></p>
+        <div class="d-resp">Experts-comptables fiables à Avranches :<br/><br/><span class="good">★ Cabinet Renard</span><br/>&nbsp;&nbsp;Spécialiste TPE/PME, liasse fiscale, paie.<br/>&nbsp;&nbsp;Explications claires, tarif transparent.<br/><br/><span class="good">✓ Recommandé pour l'accompagnement<br/>&nbsp;&nbsp;des artisans et indépendants locaux.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="d-commerce" class="demo-panel">
+    <div class="d-col before">
+      <div class="d-col-head">AVANT ALIA</div>
+      <div class="d-col-body">
+        <p class="d-query">ChatGPT : <strong>« boutique running spécialisée Rennes »</strong></p>
+        <div class="d-resp">Boutiques running à Rennes :<br/><br/>• Courir — grande enseigne nationale<br/>• Décathlon — rapport qualité/prix<br/><br/><span class="bad">⚠ Run & Co Rennes — Avis signalant un conseil peu personnalisé et des stocks limités. Peu recommandé.</span></div>
+      </div>
+    </div>
+    <div class="d-col after">
+      <div class="d-col-head">APRÈS ALIA</div>
+      <div class="d-col-body">
+        <p class="d-query">ChatGPT : <strong>« boutique running spécialisée Rennes »</strong></p>
+        <div class="d-resp">Spécialistes running à Rennes :<br/><br/><span class="good">★ Run & Co Rennes</span><br/>&nbsp;&nbsp;Analyse foulée, chaussures trail et route,<br/>&nbsp;&nbsp;conseil expert sur mesure.<br/><br/><span class="good">✓ Recommandé pour l'expertise technique<br/>&nbsp;&nbsp;et le suivi personnalisé.</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
