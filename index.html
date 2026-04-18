@@ -1412,7 +1412,7 @@ footer{
 
     <!-- Pack Lancement — featured, full width -->
     <div class="rv" style="margin-top:3.5rem;background:rgba(201,168,76,.06);border:1px solid var(--g);border-radius:4px;padding:2.5rem 3rem;position:relative;overflow:hidden">
-      <div style="position:absolute;top:0;right:0;background:var(--g);color:var(--n);font-size:.65rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;padding:.4rem 1.2rem">Notre offre principale</div>
+      <div style="position:absolute;top:0;right:0;background:var(--g);color:var(--n);font-size:.65rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;padding:.4rem 1.2rem">Offre spéciale — Pack de lancement</div>
       <div style="display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:start">
         <div>
           <div style="display:flex;align-items:center;gap:1rem;margin-bottom:.8rem">
@@ -1765,6 +1765,9 @@ footer{
               <input type="hidden" name="offre" id="hf-offre">
               <input type="hidden" name="situation" id="hf-sit">
               <input type="hidden" name="message" id="hf-msg">
+              <input type="hidden" name="score_prism_quiz" id="hf-score">
+              <input type="hidden" name="profil_quiz" id="hf-profil">
+              <input type="hidden" name="diagnostic_quiz" id="hf-diag">
               <input type="hidden" name="_subject" value="Nouvelle demande audit PRISM — ALIA">
               <button type="submit" class="btn-fsubmit" id="fsub">
                 <span id="fsub-txt">Envoyer ma demande d'audit gratuit</span>
@@ -2098,8 +2101,23 @@ function buildRecap(){
   const sit=document.querySelector('.radio-opt.sel input[name="situation"]');
   document.getElementById('hf-sit').value=sit?sit.value:'—';
   document.getElementById('hf-msg').value=document.getElementById('f-msg').value;
+  // Quiz score si disponible
+  const scoreEl=document.getElementById('qr-score');
+  const labelEl=document.getElementById('qr-label');
+  const diagEl=document.getElementById('qr-detail');
+  const hasQuiz=scoreEl&&scoreEl.textContent!=='0/10'&&scoreEl.textContent!=='';
+  if(hasQuiz){
+    document.getElementById('hf-score').value=scoreEl.textContent;
+    document.getElementById('hf-profil').value=(quizLevel||'—')+' — '+labelEl.textContent;
+    document.getElementById('hf-diag').value=diagEl.textContent;
+  }else{
+    document.getElementById('hf-score').value='Non renseigné (diagnostic non effectué)';
+    document.getElementById('hf-profil').value='—';
+    document.getElementById('hf-diag').value='—';
+  }
   // recap display
   const r=document.getElementById('recap');
+  const quizLine=hasQuiz?`<div><strong style="color:var(--g)">Score PRISM quiz :</strong> <span style="color:var(--gl)">${scoreEl.textContent}</span> · Profil ${quizLevel} · ${labelEl.textContent}</div>`:'';
   r.innerHTML=`
     <div><strong style="color:var(--w)">Nom :</strong> ${esc(document.getElementById('f-nom').value)}</div>
     <div><strong style="color:var(--w)">Entreprise :</strong> ${esc(document.getElementById('f-ent').value)}</div>
@@ -2108,6 +2126,7 @@ function buildRecap(){
     <div><strong style="color:var(--w)">Ville :</strong> ${esc(document.getElementById('f-ville').value)}</div>
     <div><strong style="color:var(--w)">Secteur :</strong> ${esc(document.getElementById('f-secteur').value)}</div>
     <div><strong style="color:var(--w)">Offre souhaitée :</strong> ${esc(offre?offre.value:'—')}</div>
+    ${quizLine}
   `;
 }
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
