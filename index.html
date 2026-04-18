@@ -621,26 +621,6 @@ footer{background:var(--navy);border-top:1px solid rgba(201,168,76,.13);padding:
   .ticker-inner{animation:none;}
   .btn{transition:none;}
 }
-
-/* ══ QUIZ ══ */
-#diagnostic{background:var(--navy-mid);padding:88px var(--px);}
-.qb-wrap{max-width:640px;margin:0 auto;background:var(--navy);border:1px solid rgba(201,168,76,.2);border-radius:var(--r);padding:32px;}
-.qb-step{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
-.qb-q{font-family:var(--fd);font-size:1.25rem;font-weight:600;color:var(--white);margin-bottom:8px;line-height:1.35;}
-.qb-hint{font-size:.76rem;color:var(--muted);background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:4px;padding:8px 12px;margin-bottom:16px;line-height:1.6;}
-.qb-hint strong{color:var(--gold);font-size:.7rem;letter-spacing:1px;text-transform:uppercase;}
-.qb-opts{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
-.qb-opt{display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:6px;cursor:pointer;font-size:.85rem;color:var(--slate);text-align:left;transition:all .2s;font-family:var(--fb);}
-.qb-opt:hover{border-color:rgba(201,168,76,.3);background:rgba(201,168,76,.05);}
-.qb-opt.selected{border-color:var(--gold);background:rgba(201,168,76,.1);color:var(--white);}
-.qb-letter{width:26px;height:26px;border-radius:50%;background:rgba(201,168,76,.15);color:var(--gold);font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.btn-next{padding:12px 28px;background:linear-gradient(135deg,var(--gold-l),var(--gold));color:var(--navy);border:none;border-radius:6px;font-family:var(--fb);font-size:.85rem;font-weight:700;cursor:pointer;opacity:.4;pointer-events:none;transition:all .2s;}
-.btn-next:not([disabled]){opacity:1;pointer-events:auto;}
-.qb-progress{height:3px;background:rgba(255,255,255,.08);border-radius:2px;margin-bottom:24px;overflow:hidden;}
-.qb-progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .4s ease;}
-.qr-score{font-family:var(--fd);font-size:3.5rem;font-weight:700;color:var(--gold);line-height:1;}
-.qr-label{font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:20px;}
-
 </style>
 </head>
 <body>
@@ -1018,11 +998,15 @@ footer{background:var(--navy);border-top:1px solid rgba(201,168,76,.13);padding:
       <div class="p-list">
         <h3>À la carte</h3>
         <div class="p-item">
-          <div class="p-info"><h4>Audit de Visibilité IA PRISM</h4><span>Rapport PDF · livraison 5 jours — déduit du Pack</span></div>
-          <div class="p-tag">300 €<small>livraison 5j</small></div>
+          <div class="p-info"><h4>Audit de Visibilité IA</h4><span>Livraison 5 jours ouvrés</span></div>
+          <div class="p-tag">300 €<small>déduit du Pack</small></div>
         </div>
         <div class="p-item">
-          <div class="p-info"><h4>Maintien PRISM Mensuel</h4><span>Veille IA · rapport · optimisations continues</span></div>
+          <div class="p-info"><h4>Optimisation complète</h4><span>Livraison 10 jours ouvrés</span></div>
+          <div class="p-tag">500–1 200 €<small>livraison 10j</small></div>
+        </div>
+        <div class="p-item">
+          <div class="p-info"><h4>Suivi mensuel IA</h4><span>Veille IA · rapport mensuel · optimisations</span></div>
           <div class="p-tag">250 €<small>/mois</small></div>
         </div>
         <div class="p-item">
@@ -1034,8 +1018,9 @@ footer{background:var(--navy);border-top:1px solid rgba(201,168,76,.13);padding:
     <div class="pack-card anim" data-d="2">
       <div class="pack-badge">L'offre idéale</div>
       <h3>Pack Lancement ALIA</h3>
-      <div class="pack-price gold-text">590 <span style="font-size:26px">€</span></div>
-      <div class="pack-save">★ Tarif de lancement — offre limitée</div>
+      <div style="text-align:center;margin-bottom:4px"><span style="font-family:var(--fd);font-size:24px;color:var(--muted);text-decoration:line-through;opacity:.5">990 €</span></div>
+<div class="pack-price gold-text">590 <span style="font-size:26px">€</span></div>
+      <div class="pack-save">★ Prix de lancement — offre limitée</div>
       <ul class="pack-list" aria-label="Inclus dans le Pack Lancement">
         <li>Audit de visibilité IA de votre établissement</li>
         <li>Optimisation totale — fiches, avis, contenus</li>
@@ -1109,17 +1094,19 @@ footer{background:var(--navy);border-top:1px solid rgba(201,168,76,.13);padding:
 
 
 <!-- ══════ DIAGNOSTIC PRISM ════════════════════════════════════════════════ -->
-<section id="diagnostic" aria-label="Diagnostic PRISM — testez votre score IA">
+<section id="diagnostic" aria-label="Diagnostic PRISM — testez votre score IA" style="background:var(--navy-mid);padding:88px var(--px);">
   <div class="section-head">
-    <p class="label fi">Diagnostic en 2 minutes</p>
-    <h2 class="fi">Votre score PRISM<br/>en 6 questions</h2>
-    <p class="fi" style="font-size:.88rem;color:var(--slate);margin-top:10px;max-width:560px;text-align:center;margin-left:auto;margin-right:auto;">Un diagnostic honnête de votre visibilité dans les IA génératives — réponses anonymes, résultat immédiat.</p>
+    <p class="label anim">Diagnostic en 2 minutes</p>
+    <h2 class="anim" data-d="1">Votre score PRISM<br/>en 6 questions</h2>
+    <p class="anim" data-d="2" style="font-size:.88rem;color:var(--slate);margin-top:10px;max-width:560px;text-align:center;margin-left:auto;margin-right:auto;">Un diagnostic honnête de votre visibilité dans les IA génératives — résultat immédiat.</p>
   </div>
-  <div class="qb-wrap fi">
+  <div style="max-width:640px;margin:0 auto;background:var(--navy);border:1px solid rgba(201,168,76,.2);border-radius:var(--r);padding:32px;" class="anim" data-d="3">
+    <div id="qProgress" style="height:3px;background:rgba(255,255,255,.08);border-radius:2px;margin-bottom:24px;overflow:hidden;"><div id="qProgressFill" style="height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width .4s;"></div></div>
     <div id="qContent"></div>
     <div id="qResult" style="display:none"></div>
   </div>
 </section>
+
 <!-- ══════ FAQ ════════════════════════════════════════════════════════════════ -->
 <section id="faq" aria-label="Questions fréquentes sur le GEO et ALIA">
   <div class="faq-head">
@@ -1490,91 +1477,77 @@ function showDemo(id){
   if(simEl)simObs.observe(simEl);
 })();
 
-
-/* ── Quiz PRISM ── */
 const QS=[
   {p:"P — Présence & NAP",q:"Ouvrez ChatGPT et tapez <em>\"[votre métier] [votre ville]\"</em>. Quel est le résultat ?",hint:"Exemple : \"restaurant fruits de mer Saint-Malo\" ou \"kinésithérapeute Rennes centre\"",opts:[{t:"Mon établissement n'apparaît pas du tout",s:0},{t:"Je suis mentionné sans détails ni recommandation",s:2},{t:"J'apparais régulièrement avec nom et spécialités",s:4},{t:"Je suis systématiquement cité en premier",s:5}]},
-  {p:"I — Indexation IA",q:"Votre <code>robots.txt</code> autorise-t-il les crawlers IA ?",hint:"GPTBot (OpenAI), PerplexityBot, ClaudeBot, Google-Extended — sans autorisation explicite, les LLM ne vous indexent pas",opts:[{t:"Je ne sais pas ce qu'est un robots.txt",s:0},{t:"Je n'ai pas vérifié les directives IA",s:1},{t:"Les crawlers classiques oui, les bots IA non",s:2},{t:"GPTBot, PerplexityBot et ClaudeBot sont autorisés",s:5}]},
+  {p:"I — Indexation IA",q:"Votre <code>robots.txt</code> autorise-t-il les crawlers IA ?",hint:"GPTBot (OpenAI), PerplexityBot, ClaudeBot, Google-Extended — sans ces autorisations, les LLM ne vous indexent pas",opts:[{t:"Je ne sais pas ce qu'est un robots.txt",s:0},{t:"Je n'ai pas vérifié les directives IA",s:1},{t:"Les crawlers classiques oui, les bots IA non",s:2},{t:"GPTBot, PerplexityBot et ClaudeBot sont autorisés",s:5}]},
   {p:"R — Réputation sémantique",q:"Comment qualifieriez-vous vos réponses aux avis Google ?",hint:"Les LLM analysent le champ sémantique de vos réponses pour extraire des signaux de recommandation.",opts:[{t:"Je ne réponds pas ou très rarement",s:0},{t:"Des formules courtes et génériques",s:1},{t:"Personnalisées mais sans stratégie sémantique",s:3},{t:"Avec attributs de spécialité et valeur ajoutée",s:5}]},
   {p:"S — Sémantique & Données",q:"Votre site a-t-il un balisage <em>Schema.org LocalBusiness</em> complet ?",hint:"Schema.org avec @type, name, address, geo, openingHours, areaServed est un signal majeur pour le RAG des LLM.",opts:[{t:"Je ne sais pas ce qu'est Schema.org",s:0},{t:"Un Schema basique généré par mon CMS",s:1},{t:"LocalBusiness mais sans geo ni areaServed",s:3},{t:"Complet avec coordonnées, zone et spécialités",s:5}]},
   {p:"M — Moteurs IA & RAG",q:"Vos contenus web sont-ils optimisés pour le retrieval augmenté (RAG) ?",hint:"Les IA utilisent le RAG pour enrichir leurs réponses. Un contenu dense en entités locales multiplie les citations.",opts:[{t:"Mon contenu n'a pas évolué depuis plus d'un an",s:0},{t:"Pas de FAQ structurée ni entités locales",s:2},{t:"FAQs présentes mais sans optimisation RAG",s:3},{t:"Entités locales, FAQ et données fraîches",s:5}]},
   {p:"E-E-A-T & Autorité",q:"Quel est votre signal E-E-A-T dans votre écosystème local ?",hint:"Les LLM évaluent votre E-E-A-T via mentions presse, backlinks professionnels, certifications et cohérence NAP.",opts:[{t:"Aucune mention presse, pas d'annuaires",s:0},{t:"Pages Jaunes et Google Maps seulement",s:2},{t:"5+ annuaires avec NAP cohérent",s:3},{t:"12+ annuaires, presse locale, certifications",s:5}]}
 ];
+
+/* ── Quiz PRISM render ── */
 const LETS=['A','B','C','D'];
-let qIdx=0, answers=[];
+let qIdx=0,qAnswers=[];
 
 function renderQ(){
   const q=QS[qIdx];
-  const pct=Math.round((qIdx/QS.length)*100);
-  document.getElementById('qContent').innerHTML=`
-    <div class="qb-progress"><div class="qb-progress-fill" style="width:${pct}%"></div></div>
-    <div class="qb-step">Question ${qIdx+1} / ${QS.length} · <span style="color:var(--gold)">${q.p}</span></div>
-    <div class="qb-q">${q.q}</div>
-    ${q.hint?`<div class="qb-hint"><strong>Contexte · </strong>${q.hint}</div>`:''}
-    <div class="qb-opts">${q.opts.map((o,i)=>`<button class="qb-opt" data-s="${o.s}" onclick="selOpt(this)"><span class="qb-letter">${LETS[i]}</span><span>${o.t}</span></button>`).join('')}</div>
-    <div class="qb-nav"><button class="btn-next" id="qNext" disabled onclick="nextQ()">${qIdx<QS.length-1?'Question suivante →':'Voir mon score →'}</button></div>`;
+  document.getElementById('qProgressFill').style.width=Math.round(qIdx/QS.length*100)+'%';
+  document.getElementById('qContent').innerHTML=
+    '<div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px">Question '+(qIdx+1)+' / '+QS.length+' · <span style="color:var(--gold)">'+q.p+'</span></div>'+
+    '<div style="font-family:var(--fd);font-size:1.2rem;font-weight:600;color:var(--white);margin-bottom:10px;line-height:1.35">'+q.q+'</div>'+
+    (q.hint?'<div style="font-size:.76rem;color:var(--muted);background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:4px;padding:8px 12px;margin-bottom:14px;line-height:1.6"><span style="color:var(--gold);font-weight:700;font-size:.7rem;letter-spacing:1px;text-transform:uppercase">Contexte · </span>'+q.hint+'</div>':'')+
+    '<div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">'+
+    q.opts.map((o,i)=>'<button onclick="qSel(this)" data-s="'+o.s+'" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:6px;cursor:pointer;font-size:.84rem;color:var(--slate);text-align:left;transition:all .2s;font-family:var(--fb);width:100%"><span style="width:26px;height:26px;border-radius:50%;background:rgba(201,168,76,.15);color:var(--gold);font-size:.74rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">'+LETS[i]+'</span><span>'+o.t+'</span></button>').join('')+
+    '</div>'+
+    '<div><button id="qNextBtn" disabled onclick="qNext()" style="padding:12px 28px;background:linear-gradient(135deg,var(--gold-l),var(--gold));color:var(--navy);border:none;border-radius:6px;font-family:var(--fb);font-size:.84rem;font-weight:700;cursor:pointer;opacity:.4;pointer-events:none;transition:all .2s">'+(qIdx<QS.length-1?'Question suivante →':'Voir mon score →')+'</button></div>';
 }
 
-function selOpt(el){
-  document.querySelectorAll('.qb-opt').forEach(b=>b.classList.remove('selected'));
-  el.classList.add('selected');
-  const btn=document.getElementById('qNext');
-  if(btn){btn.removeAttribute('disabled');}
+function qSel(el){
+  el.closest('div').querySelectorAll('button').forEach(b=>{b.style.borderColor='rgba(255,255,255,.08)';b.style.background='rgba(255,255,255,.03)';b.style.color='var(--slate)';});
+  el.style.borderColor='var(--gold)';el.style.background='rgba(201,168,76,.1)';el.style.color='var(--white)';
+  el.dataset.selected='1';
+  const btn=document.getElementById('qNextBtn');
+  if(btn){btn.removeAttribute('disabled');btn.style.opacity='1';btn.style.pointerEvents='auto';}
 }
 
-function nextQ(){
-  const sel=document.querySelector('.qb-opt.selected');
+function qNext(){
+  const sel=document.querySelector('#qContent button[data-selected="1"]');
   if(!sel)return;
-  answers.push(parseInt(sel.dataset.s));
-  if(qIdx<QS.length-1){qIdx++;renderQ();}
-  else showResult();
+  qAnswers.push(parseInt(sel.dataset.s));
+  if(qIdx<QS.length-1){qIdx++;renderQ();}else qShowResult();
 }
 
-function showResult(){
-  const total=answers.reduce((a,b)=>a+b,0);
+function qShowResult(){
+  const total=qAnswers.reduce((a,b)=>a+b,0);
   const max=QS.length*5;
   const pct=Math.round(total/max*100);
-  const level=pct>=70?'Bon':pct>=45?'Partiel':'Faible';
   const col=pct>=70?'#1A8A5A':pct>=45?'#E67E22':'#C0392B';
+  const lvl=pct>=70?'Bon':pct>=45?'Partiel':'Faible';
+  const msg=pct>=70?'Bonne visibilité IA — un suivi mensuel PRISM consolidera vos acquis.':pct>=45?'Visibilité partielle — des optimisations ciblées généreront des gains rapides.':'Visibilité faible — un audit PRISM révélera les actions prioritaires.';
+  document.getElementById('qProgress').style.display='none';
   document.getElementById('qContent').style.display='none';
+  document.getElementById('qProgressFill').style.width='100%';
+  document.getElementById('qProgress').style.display='block';
   const r=document.getElementById('qResult');
   r.style.display='block';
-  r.innerHTML=`
-    <div style="text-align:center;margin-bottom:24px">
-      <div class="qr-score" style="color:${col}">${total}<span style="font-size:1.2rem;color:var(--muted)">/${max}</span></div>
-      <div class="qr-label" style="color:${col}">${level}</div>
-      <p style="font-size:.85rem;color:var(--slate);margin-top:8px">${pct>=70?"Bonne visibilité IA — un suivi mensuel PRISM consolidera vos acquis.":pct>=45?"Visibilité partielle — des optimisations ciblées généreront des gains rapides.":"Visibilité faible — un audit PRISM révélera les actions prioritaires."}</p>
-    </div>
-    <div id="qrForm" style="background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.15);border-radius:6px;padding:20px">
-      <p style="font-size:.8rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:14px">Recevez votre rapport détaillé</p>
-      <form id="prismForm" action="https://formspree.io/f/mbdqgzde" method="POST">
-        <input type="hidden" name="score" value="Score PRISM : ${total}/${max} (${pct}%) — Niveau ${level}"/>
-        <input type="text" name="nom" placeholder="Votre nom" required style="width:100%;padding:10px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);border-radius:5px;color:var(--white);font-family:var(--fb);font-size:.85rem;margin-bottom:10px;outline:none;box-sizing:border-box"/>
-        <input type="email" name="email" placeholder="Votre email" required style="width:100%;padding:10px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);border-radius:5px;color:var(--white);font-family:var(--fb);font-size:.85rem;margin-bottom:10px;outline:none;box-sizing:border-box"/>
-        <input type="tel" name="telephone" placeholder="Téléphone (optionnel)" style="width:100%;padding:10px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);border-radius:5px;color:var(--white);font-family:var(--fb);font-size:.85rem;margin-bottom:14px;outline:none;box-sizing:border-box"/>
-        <button type="submit" style="width:100%;padding:12px;background:linear-gradient(135deg,var(--gold-l),var(--gold));color:var(--navy);border:none;border-radius:6px;font-family:var(--fb);font-size:.85rem;font-weight:700;cursor:pointer">Recevoir mon audit offert →</button>
-      </form>
-      <div id="prismSuccess" style="display:none;text-align:center;padding:16px">
-        <div style="font-size:1.5rem;margin-bottom:8px">✅</div>
-        <div style="font-weight:700;color:var(--gold);margin-bottom:4px">Demande envoyée !</div>
-        <div style="font-size:.8rem;color:var(--slate)">Je vous recontacte sous 24h. — Cédric, Agence ALIA</div>
-      </div>
-    </div>`;
-
+  r.innerHTML='<div style="text-align:center;margin-bottom:24px"><div style="font-family:var(--fd);font-size:3.5rem;font-weight:700;color:'+col+';line-height:1">'+total+'<span style="font-size:1.2rem;color:var(--muted);">/'+max+'</span></div><div style="font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:'+col+';margin-bottom:8px">'+lvl+'</div><p style="font-size:.85rem;color:var(--slate)">'+msg+'</p></div>'+
+  '<div style="background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.15);border-radius:6px;padding:20px">'+
+  '<p style="font-size:.8rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:14px">Recevez votre rapport détaillé</p>'+
+  '<form id="prismForm" action="https://formspree.io/f/mbdqgzde" method="POST">'+
+  '<input type="hidden" name="score" value="Score PRISM : '+total+'/'+max+' ('+pct+'%) — Niveau '+lvl+'"/>'+
+  '<input type="text" name="nom" placeholder="Votre nom" required style="width:100%;padding:10px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);border-radius:5px;color:var(--white);font-family:var(--fb);font-size:.85rem;margin-bottom:10px;outline:none;box-sizing:border-box"/>'+
+  '<input type="email" name="email" placeholder="Votre email" required style="width:100%;padding:10px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);border-radius:5px;color:var(--white);font-family:var(--fb);font-size:.85rem;margin-bottom:10px;outline:none;box-sizing:border-box"/>'+
+  '<input type="tel" name="telephone" placeholder="Téléphone (optionnel)" style="width:100%;padding:10px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);border-radius:5px;color:var(--white);font-family:var(--fb);font-size:.85rem;margin-bottom:14px;outline:none;box-sizing:border-box"/>'+
+  '<button type="submit" style="width:100%;padding:12px;background:linear-gradient(135deg,var(--gold-l),var(--gold));color:var(--navy);border:none;border-radius:6px;font-family:var(--fb);font-size:.85rem;font-weight:700;cursor:pointer">Recevoir mon audit offert →</button>'+
+  '</form>'+
+  '<div id="prismSuccess" style="display:none;text-align:center;padding:16px"><div style="font-size:1.5rem;margin-bottom:8px">✅</div><div style="font-weight:700;color:var(--gold);margin-bottom:4px">Demande envoyée !</div><div style="font-size:.8rem;color:var(--slate)">Je vous recontacte sous 24h. — Cédric, Agence ALIA</div></div>'+
+  '</div>';
   const form=document.getElementById('prismForm');
-  if(form){
-    form.addEventListener('submit',function(e){
-      e.preventDefault();
-      fetch('https://formspree.io/f/mbdqgzde',{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}})
-        .then(()=>{form.style.display='none';document.getElementById('prismSuccess').style.display='block';});
-    });
-  }
+  if(form){form.addEventListener('submit',function(e){e.preventDefault();fetch('https://formspree.io/f/mbdqgzde',{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}}).then(()=>{form.style.display='none';document.getElementById('prismSuccess').style.display='block';});});}
 }
 
-document.addEventListener('DOMContentLoaded',function(){
-  const qc=document.getElementById('qContent');
-  if(qc && QS.length>0) renderQ();
-});
+document.addEventListener('DOMContentLoaded',function(){if(document.getElementById('qContent'))renderQ();});
 
 /* ── Smooth scroll (ancres) ── */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
